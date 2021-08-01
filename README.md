@@ -1,4 +1,3 @@
-# QuizApp
-
-CUSTOM shareable Quiz App 
-Can also be used as Survey interactive survey app specially for social/Human behavioural pattern researchers
+# Shareable QuizApp
+ 
+Can also be used as Interactive Survey app specially by social/Human behavioural pattern researchers
