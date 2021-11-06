@@ -1,0 +1,218 @@
+{% extends 'QuizApp/base.htm' %}
+{% load static %}
+
+
+
+{% block content %}
+
+{% if show %}
+
+<a href="/"><h3>Create your Own Quiz</h3></a>
+
+
+<table>
+
+<tr>
+
+<th>Name         </th>
+<th>Score</th>
+
+</tr>
+{% for result in obj1 %}
+<td>{{result.name}}</td>
+<td>{{result.score}}</td>
+<br>
+</table>
+
+{% endfor %}
+
+{% else %}
+
+
+<div class="name my-5 offset-sm-5" id="form">
+<input type="text" name="name" id="name" value=''>
+<button name="start" id="btn" >Start</button>
+</div>
+
+<div class="container">
+<div class="row1">
+<div class="col-md-12 d my-5 offset-sm-1" id="1">
+<img class="1" src="{% static 'QuizApp/images/download2.jpg' %}" id="1a" onclick="myfunc(this.className,this.id)"  alt="">
+<img class="1" src="{% static 'QuizApp/images/download3.jpg' %}" id="1b" onclick="myfunc(this.className,this.id)"  alt="">
+<img class="1" src="{% static 'QuizApp/images/download5.jpg' %}" id="1c" onclick="myfunc(this.className,this.id)" alt="">
+</div>
+</div>
+</div>
+
+<div class="container">
+  <div class="row1">
+  <div class="col-md-12 d my-3 offset-sm-1" id="2">
+  <img class="2" src="{% static 'QuizApp/images/images1.jpg' %}" id="1a" onclick="myfunc(this.className,this.id)"  alt="">
+  <img class="2" src="{% static 'QuizApp/images/images2.jpg' %}" id="1b" onclick="myfunc(this.className,this.id)"  alt="">
+  <img class="2" src="{% static 'QuizApp/images/images3.png' %}" id="1c" onclick="myfunc(this.className,this.id)" alt="">
+  </div>
+  </div>
+  </div>
+<div class="container">
+  <div class="row1">
+  <div class="col-md-12 d" id="3">
+  <img class="3" src="{% static 'QuizApp/images/images1.jpg' %}" id="1a" onclick="myfunc(this.className,this.id)"  alt="">
+  <img class="3" src="{% static 'QuizApp/images/images2.jpg' %}" id="1b" onclick="myfunc(this.className,this.id)"  alt="">
+  <img class="3" src="{% static 'QuizApp/images/images3.png' %}" id="1c" onclick="myfunc(this.className,this.id)" alt="">
+  </div>
+  </div>
+  </div><div class="container">
+  <div class="row1">
+  <div class="col-md-12 d" id="4">
+  <img class="4" src="{% static 'QuizApp/images/images1.jpg' %}" id="1a" onclick="myfunc(this.className,this.id)"  alt="">
+  <img class="4" src="{% static 'QuizApp/images/images2.jpg' %}" id="1b" onclick="myfunc(this.className,this.id)"  alt="">
+  <img class="4" src="{% static 'QuizApp/images/images3.png' %}" id="1c" onclick="myfunc(this.className,this.id)" alt="">
+  </div>
+  </div>
+  </div><div class="container">
+  <div class="row1">
+  <div class="col-md-12 d" id="5">
+  <img class="5" src="{% static 'QuizApp/images/images1.jpg' %}" id="1a" onclick="myfunc(this.className,this.id)"  alt="">
+  <img class="5" src="{% static 'QuizApp/images/images2.jpg' %}" id="1b" onclick="myfunc(this.className,this.id)"  alt="">
+  <img class="5" src="{% static 'QuizApp/images/images3.png' %}" id="1c" onclick="myfunc(this.className,this.id)" alt="">
+  </div>
+  </div>
+  </div>
+
+
+
+
+
+{% endif %}
+{% endblock content %}
+
+{% block script %}
+
+
+
+
+
+<script src="{% static 'QuizApp/js/myscript.js' %}"></script>
+
+{% endblock script %}
+<!--
+function myname(){
+
+alert("h")
+
+name=document.getElementById("name").value;
+document.cookie="friendname"+"="+name
+alert(document.cookie)
+document.getElementById("form").className="d";
+
+document.getElementById("1").classList.remove("d")
+
+}
+
+function myfunc(name,id){
+
+var score=0;
+
+var array=["{{obj.q1}}","{{obj.q2}}"]
+
+for (let check of array){
+   // check id against given array of correct answer id
+   if (id==check){
+        alert("correct")
+        score=score+1
+       for (let i=1;i<3;i++){
+        
+         //class name
+          if(name==i){
+         
+                  document.getElementById(i).className="d";
+                  var take = document.getElementById(i+1);
+                  take.classList.remove("d");
+ 
+    }
+     
+   
+    } 
+   
+    }
+    else{
+        alert("wrong"+obj.q1+obj.q2)  
+        score=score-1
+    for (let i=1;i<3;i++){
+    if(name==i){
+         
+  document.getElementById(i).className="d";
+  var take = document.getElementById(i+1);
+  take.classList.remove("d");
+
+    }
+      
+    }
+    
+    }
+}
+if (score<0){
+    score=0
+
+}
+
+
+}
+
+
+
+
+//To remove first and add second
+ 
+
+//To remove second and add third
+   
+
+
+
+
+
+
+
+
+{% comment %} {% if visit  %}
+
+<button>Delete the Quiz</button>
+
+{% endcomment %}
+
+
+
+
+//var take1=document.getElementById("check1").innerHTML;
+//if (id==take1){
+  /*  alert("correct")
+     score=score+1 
+    }
+else{
+    alert("wrong")
+   }
+
+}
+
+function myfunc2(id){
+ 
+
+var take2=document.getElementById("check2").innerHTML;
+if (id==take2){
+    alert("correct")
+    document.getElementById("2").className="d";
+ var take = document.getElementById("3");
+ take.classList.remove("d");
+
+}
+else{
+    alert("wrong")
+    document.getElementById("2").className="d";
+ var take = document.getElementById("3");
+ take.classList.remove("d");
+
+}
+}
+*/
+-->

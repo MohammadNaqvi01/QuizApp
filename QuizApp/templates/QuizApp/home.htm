@@ -1,0 +1,72 @@
+{% extends 'QuizApp/base.htm' %}
+{% load static %}
+
+   {% block title %}{{Quiz}}{% endblock title %}
+   
+{% block content %}
+
+
+<br>
+
+<div class="entry">
+<input type="submit" value="Start">
+<input class="btn btn-success" type="button" value="Result">
+</div>
+<!--<a class="text-danger" href="quiz/{{visit.unique}}" class="d" id="3">Share</a>
+
+
+
+<div class="" id="form">
+<input type="text" name="name" id="name">
+<button name="start" id="btn" onclick="myfunc(this.id)">Start</button>
+</div>
+-->
+
+
+
+<!--GIVING VALUE TO EVERY PICTURE-->
+
+
+<div class="container">
+
+<div class="row">
+
+<div class="col-md-12">
+
+<div class="quiz">
+
+{% for q in quest %}
+
+
+
+<div class="{{q.category}}">
+
+<img src="{{q.picture_1.url}}" onclick="myfunc(this.id)"  id="{{q.category}}_1" alt="">
+
+<img src="{{q.picture_2.url}}" onclick="myfunc(this.id)"  id="{{q.category}}_2" alt="">
+
+<img src="{{q.picture_3.url}}" onclick="myfunc(this.id)"  id="{{q.category}}_3" alt="">
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+{% endblock content %}
+
+{% block script %}
+
+<script src="{% static 'QuizApp/js/myscript.js' %}"></script>
+
+{% endblock script %}

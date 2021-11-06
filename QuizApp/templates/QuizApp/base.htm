@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<h2>QuizApp</h2>
+<h2>Quiz App</h2>
 
 
 
@@ -25,9 +25,12 @@
 
 
 
-{% block script %}{% endblock script %}
+
     <script src="{% static 'QuizApp/js/bootstrap.js'%}"></script>
     <script src="{% static 'QuizApp/js/jquery.js' %}"></script>
     <script src="{% static 'QuizApp/js/popper.js' %}"></script>
+    <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    {% block script %}{% endblock script %}
 </body>
 </html>
