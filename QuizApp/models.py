@@ -39,8 +39,6 @@ class Question(models.Model):
     picture_3=models.ImageField(upload_to='producting',default=1)
     category=models.CharField(choices=CHOICES,max_length=4) 
     
-    class Meta:
-          ordering=['id']
 
     def __str__(self):
         return str(self.id)
