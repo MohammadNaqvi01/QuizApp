@@ -3,6 +3,7 @@ from django.http.response import JsonResponse
 from django.shortcuts import render,HttpResponseRedirect
 from django import forms
 from .models import *
+from django.views import View
 # Create your views here.
 
 
@@ -18,7 +19,7 @@ def home(request):
 
        questions=Question.objects.all()
        request.session.setdefault('created','')
-
+       
    #  #SESSION COUNT(PAGE VISITS FOR ORIGINAL USER)
    #     check=request.session.get('check',0)
    #     count=check+1
@@ -49,7 +50,7 @@ def home(request):
    #      if request.session['check']>=2:
    #          return render(request,'QuizApp/home.htm',{'show':'no','take':take,'take2':take2})
    #      else:
-           
+            
        return render(request,'QuizApp/home.htm',{'quest':questions})
 
 
@@ -85,7 +86,7 @@ def quest(request):
    print(f"###########{quest}#############")
    
    unique=request.COOKIES['sessionid']
-   QuizUserModel(name="",unique=unique,category=quest[0],quest_id=quest[1]).save()
+   QuizUserModel(name=request.session['name'],unique=unique,category=quest[0],quest_id=quest[1]).save()
    data={
    'category':quest[0],
    'id':quest[1]
@@ -94,3 +95,12 @@ def quest(request):
    return JsonResponse(data)
 
    
+def sessions(request):
+   name=request.GET['quest']
+   request.session['name']=name
+   print(request.session['name'])
+   data={
+      'done':'done'
+   }
+   return JsonResponse(data)
+

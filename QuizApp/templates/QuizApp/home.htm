@@ -9,8 +9,8 @@
 <br>
 
 <div class="entry">
-<input type="submit" value="Start">
-<input class="btn btn-success" type="button" value="Result">
+<input type="text" id="name">
+<input type="submit" value="Start" id="submit">
 </div>
 <!--<a class="text-danger" href="quiz/{{visit.unique}}" class="d" id="3">Share</a>
 
@@ -39,7 +39,7 @@
 
 
 
-<div class="{{q.category}}">
+<div class="{{q.category}} d">
 
 <img src="{{q.picture_1.url}}" onclick="myfunc(this.id)"  id="{{q.category}}_1" alt="">
 
@@ -59,8 +59,9 @@
 
 </div>
 
-
-
+<div class="share d">
+<a href="{{link}}"><button class="btn-dark">Share</button></a>
+</div>
 
 
 {% endblock content %}
@@ -70,3 +71,6 @@
 <script src="{% static 'QuizApp/js/myscript.js' %}"></script>
 
 {% endblock script %}
+
+
+
