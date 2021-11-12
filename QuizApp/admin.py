@@ -12,7 +12,7 @@ class QuizUserModelAdmin(admin.ModelAdmin):
 
 @admin.register(QuizFriendModel)
 class QuizFriendModelAdmin(admin.ModelAdmin):
-    list_display=['id','name','score']
+    list_display=['id','name','unique','user_belong_to','score']
 
 
 @admin.register(Question)

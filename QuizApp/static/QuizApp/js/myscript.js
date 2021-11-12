@@ -16,11 +16,12 @@ $(document).ready(function(){
        
       success:function(data){
             
-       alert(data.done) 
+        $(".share").children().attr("href","quiz/"+data.link)
         
+
       }
 
-
+      
      });
      $(this).parent().addClass("d")
      $(".quiz div:first").removeClass("d")
@@ -66,11 +67,8 @@ $(document).ready(function(){
       sib.removeClass("d");
   }
   else{
-    alert("No more elements")
-    alert(document.cookie)
-    cookie=getCookie("sessionid");
-    alert(cookie)
-    $(".share").removeClass("d").children().attr("href",cookie)
+    $(".share").removeClass("d")
+    
 
 
   }
@@ -86,24 +84,7 @@ $(document).ready(function(){
 }
 
 
-function getCookie(sessionid) {
-  
-  let name = sessionid + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-   
-  for(let i = 0; i <ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
+
 
 
 

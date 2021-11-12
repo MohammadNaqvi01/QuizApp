@@ -2,13 +2,11 @@
 {% load static %}
 
    {% block title %}{{Quiz}}{% endblock title %}
-   
+
 {% block content %}
 
 
 <br>
-
-
 
 <div class="entry">
 <input type="text" id="name">
@@ -64,18 +62,28 @@
 
 </div>
 
+
+
 <div class="share d">
-<a href=""><button class="btn-dark">Share</button></a>
+<a href=""><button class="btn-dark">Score</button></a>
 </div>
 
+
+<input type="hidden" name="id"value="" id="contain">
 
 {% endblock content %}
 
 {% block script %}
 
-<script src="{% static 'QuizApp/js/myscript.js' %}"></script>
+<script>
+
+
+
+</script>
+
+<script src="{% static 'QuizApp/js/myscript2.js' %}">
+
+
+</script>
 
 {% endblock script %}
-
-
-

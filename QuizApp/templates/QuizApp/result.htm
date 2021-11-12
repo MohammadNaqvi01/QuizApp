@@ -1,0 +1,15 @@
+{% extends 'QuizApp/base.htm' %}
+
+{% block content %}
+<table>
+<th>For {{name}} </th>
+<th> Score</th>
+{% for result in results %}
+<tr>
+<td>{{result.name}} </td>
+<td>{{result.score}}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock content %}

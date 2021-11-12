@@ -1,84 +1,38 @@
 
-from django.http.response import JsonResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render,HttpResponseRedirect
 from django import forms
 from .models import *
 from django.views import View
-# Create your views here.
-
-
-def test(request):
-
-   return render(request,'QuizApp/quiz.htm',{'bro':'code'})
+from django.db.models import Q
 
 
 
+
+#Render questions to user and create a session
 def home(request):
        
-
-
        questions=Question.objects.all()
        request.session.setdefault('created','')
-       
-   #  #SESSION COUNT(PAGE VISITS FOR ORIGINAL USER)
-   #     check=request.session.get('check',0)
-   #     count=check+1
-   #     request.session['check']=count
-         
-   #  #TAKING ANSWERS FROM COOKIE INTO SESSION
-   #     take3=request.session['name']=request.COOKIES.get('name','none')
-   #     take=request.session['id1']=request.COOKIES.get('id1','none')
-   #     take2=request.session['id2']=request.COOKIES.get('id2','none')
-   
-    #Checking if user has submitted quiz/data before
-   #  if request.method=="POST":
-   #  if take and take2 != 'none':
-              
-      #  obj1=QuizUserModel.objects.latest('id')  
-      #  print(obj1.id)
-      #  print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")    
-      #  visitor=request.session['visitor']=obj1.id+1
-      #  print(f"Heyyyyyyyyyyyyyy {visitor}")
-      #  md=QuizUserModel(name=take3,q1=take,q2=take2,unique=visitor)
-        
-      #  md.save()  
-      
-      #  obj=QuizUserModel.objects.latest('id')      
-   #     print(f"vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv     {obj}")
-   #     return render(request,'QuizApp/home.htm',{'show':'no','visit':obj})
-   # #  else:
-   #      if request.session['check']>=2:
-   #          return render(request,'QuizApp/home.htm',{'show':'no','take':take,'take2':take2})
-   #      else:
             
        return render(request,'QuizApp/home.htm',{'quest':questions})
 
+     
 
+#Render predefined questions to friend and set user's session id in key cookie for reference 
+def questions(request,id):
+
+        questions=Question.objects.all()
+      
+        take= render(request,'QuizApp/questions.htm',{'quest':questions})
+        take.set_cookie('key',id,httponly=True)
         
-
-def questions(request,my_id):
-        
-        if request.method=="POST":
-
-           arrive=request.session['arrive']='visit'
-           score=request.session['score']=request.COOKIES.get('score','none')
-           name=request.session['friendname']=request.COOKIES.get('friendname','none')
-           
-           got_it=QuizFriendModel(name=name,score=score,unique=my_id)
-           got_it.save()
-          
-          
-          #one to many relationship to locate friends using that link
-           
-           obj=QuizFriendModel.objects.filter(unique=my_id)
-           return render(request,'QuizApp/quiz.htm',{'obj1':obj,'show':'no'})
-        else:
-         #IF request is get, show quiz
-         take=QuizUserModel.objects.get(pk=my_id)  
-         return render(request,'QuizApp/quiz.htm',{'obj':take})
+        request.session.setdefault('friend','')
+        return take
 
 
 
+#Get user ans and category on each answer and save it as database
 def quest(request):
 
    id=request.GET['quest']
@@ -94,13 +48,73 @@ def quest(request):
    
    return JsonResponse(data)
 
-   
+
+#Set name of user in session after clicking on start button   
 def sessions(request):
    name=request.GET['quest']
    request.session['name']=name
-   print(request.session['name'])
+         
    data={
-      'done':'done'
+      'link':request.COOKIES['sessionid']
    }
    return JsonResponse(data)
 
+
+
+#Check question id and category clicked by friend against usermodel(through key set up during question rendring for friend)
+def check(request):
+       
+       id=request.GET['quest']
+       quest=id.split("_")
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+       keys=QuizUserModel.objects.filter(unique=request.COOKIES['key'])
+       print(f"#############{keys}####of friend ############")
+       for key in keys:
+          print(f"##bbb####{key.quest_id}####{quest[1]}####")
+          print(f"###bbb###{key.category}###{quest[0]}###")
+          if key.quest_id==quest[1] and key.category==quest[0]:
+             
+              friend=QuizFriendModel.objects.get(unique=request.COOKIES['sessionid'],user_belong_to=key.unique)
+            
+              friend.score+=1
+              friend.save()
+              data={
+                'answer':'Correct'
+             }
+             
+              return JsonResponse(data) 
+          
+          data={
+                'answer':'Wrong'
+             }    
+     
+         
+       return JsonResponse(data)      
+
+
+
+
+#Provide link for score and set friendname in session 
+def quizsessions(request):
+   
+   name=request.GET['quest']
+   request.session['name']=name
+   
+   QuizFriendModel(unique=request.COOKIES['sessionid'],user_belong_to=request.COOKIES['key'],name=request.session['name']).save()
+      
+   data={
+      'link':request.COOKIES['sessionid']
+   }
+   return JsonResponse(data)
+ 
+
+#To show result of author and it's users
+def result(request,pk):
+    total=0
+    user=QuizUserModel.objects.filter(unique=pk).first() 
+    #result of all friends of user
+    friends=QuizFriendModel.objects.filter(user_belong_to=user.unique)
+    
+    
+
+    return render(request,'QuizApp/result.htm',{'results':friends,'name':user.name})
